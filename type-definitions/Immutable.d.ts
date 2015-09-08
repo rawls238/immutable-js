@@ -470,6 +470,11 @@ declare module Immutable {
     delete(key: K): Map<K, V>;
     remove(key: K): Map<K, V>;
 
+    /**
+     * Returns a new Map excluding any values contained within `iterables`.
+     *
+     */
+
     subtract(...iterables: Iterable<any, K>[]): Map<K, V>;
     subtract(...iterables: Array<K>[]): Map<K, V>;
 
