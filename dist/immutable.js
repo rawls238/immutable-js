@@ -1905,6 +1905,21 @@
       );
     };
 
+    src_Map__Map.prototype.subtract = function() {var iters = SLICE$0.call(arguments, 0);
+      if (iters.length === 0) {
+        return this;
+      }
+      iters = iters.map(function(iter ) {return SetIterable(iter)});
+      var originalMap = this;
+      return this.withMutations(function(map ) {
+        originalMap.forEach(function(v, k)  {
+          if (iters.some(function(iter ) {return iter.includes(k)})) {
+            map.remove(k);
+          }
+        });
+      });
+    };
+
     src_Map__Map.prototype.sort = function(comparator) {
       // Late binding
       return OrderedMap(sortFactory(this, comparator));

@@ -9,7 +9,7 @@
 
 import { is } from './is'
 import { fromJS } from './fromJS'
-import { isIterable, KeyedIterable, isOrdered } from './Iterable'
+import { SetIterable, isIterable, KeyedIterable, isOrdered } from './Iterable'
 import { KeyedCollection } from './Collection'
 import { DELETE, SHIFT, SIZE, MASK, NOT_SET, CHANGE_LENGTH, DID_ALTER, OwnerID,
           MakeRef, SetRef, arrCopy } from './TrieUtils'
@@ -137,6 +137,21 @@ export class Map extends KeyedCollection {
         m.mergeDeep.apply(m, iters) :
         iters[iters.length - 1]
     );
+  }
+
+  subtract(...iters) {
+    if (iters.length === 0) {
+      return this;
+    }
+    iters = iters.map(iter => SetIterable(iter));
+    var originalMap = this;
+    return this.withMutations(map => {
+      originalMap.forEach((v, k) => {
+        if (iters.some(iter => iter.includes(k))) {
+          map.remove(k);
+        }
+      });
+    });
   }
 
   sort(comparator) {

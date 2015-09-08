@@ -322,4 +322,12 @@ describe('Map', () => {
     expect(Immutable.is(m1, m2)).toBe(true);
   });
 
+  it('can have difference on maps', () => {
+    var map = Map({'a': 1, 'b': 2, 'c': 3});
+    var set = Immutable.Set(['a', 'b']);
+    expect(map.subtract(set).toJS()).toEqual({'c': 3});
+    var list = Immutable.List(['a', 'b']);
+    expect(map.subtract(list).toJS()).toEqual({'c': 3});
+  });
+
 });
